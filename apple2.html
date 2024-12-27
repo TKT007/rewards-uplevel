@@ -373,27 +373,86 @@
     </button>
 
      <script>
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            const mainContent = document.querySelector('.main-content');
-            const ctaButton = document.querySelector('.cta-button');
-            
-            // Removida a espera inicial
-            mainContent.style.opacity = '1';
-            mainContent.style.transform = 'scale(1)';
-            
-            // Mostra o botão imediatamente
-            ctaButton.style.display = 'flex';
-            ctaButton.style.opacity = '1';
-            
-            // Anima os cards
-            document.querySelectorAll('.card').forEach((card, index) => {
-                card.style.animationDelay = `${index * 0.1}s`;
-            });
-        });
+       window.addEventListener('load', () => {
+    const mainContent = document.querySelector('.main-content');
+    const ctaButton = document.querySelector('.cta-button');
+    
+    // Mostra o conteúdo e o botão imediatamente
+    mainContent.style.opacity = '1';
+    mainContent.style.transform = 'scale(1)';
+    ctaButton.style.display = 'flex';
+    ctaButton.style.opacity = '1';
+    
+    // Anima os cards
+    document.querySelectorAll('.card').forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+    });
 
-        // Resto do JavaScript permanece igual
-        // ...
+    // Inicia os alerts após um pequeno delay
+    setTimeout(() => {
+        showNameAlert();
+        setInterval(showNameAlert, 5000);
+    }, 2000);
+});
+
+// Timer functionality
+function updateTimer() {
+    const timerElement = document.getElementById('timer');
+    let [minutes, seconds] = timerElement.textContent.split(':').map(Number);
+    
+    if (seconds > 0) {
+        seconds--;
+    } else if (minutes > 0) {
+        minutes--;
+        seconds = 59;
+    }
+    
+    timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+setInterval(updateTimer, 1000);
+
+// Name alert functionality
+function showNameAlert() {
+    const alert = document.getElementById('nameAlert');
+    const nameSpan = alert.querySelector('.name');
+    const randomName = NAMES[Math.floor(Math.random() * NAMES.length)];
+    
+    nameSpan.textContent = randomName;
+    alert.style.display = 'flex';
+    
+    setTimeout(() => {
+        alert.style.display = 'none';
+    }, 3000);
+}
+
+// CTA button click handler
+function handleClick() {
+    const baseUrl = 'https://glstrck.com/aff_c?offer_id=1242&aff_id=1497';
+    
+    // Get URL parameters from current page
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Create the final URL
+    let finalUrl = baseUrl;
+    
+    // Add any additional parameters from the current URL
+    urlParams.forEach((value, key) => {
+        finalUrl += `&${key}=${value}`;
+    });
+    
+    // Create and click the link
+    const a = document.createElement('a');
+    a.href = finalUrl;
+    a.rel = 'noreferrer';
+    a.target = '_self';
+    a.click();
+}
+
+// Make all cards clickable
+document.querySelectorAll('.card, .rewards-img').forEach(element => {
+    element.style.cursor = 'pointer';
+    element.addEventListener('click', handleClick);
+});
     </script>
 </body>
 </html>

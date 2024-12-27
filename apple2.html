@@ -305,9 +305,7 @@
     </style>
 </head>
 <body>
-    <div id="preloader">
-        <img src="/images/logo-apple.png" alt="Rewards $750 Logo">
-    </div>
+   
 
     <div id="nameAlert" class="alert">
        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert h-4 w-4 shrink-0"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
@@ -384,33 +382,29 @@
             'Liam P.', 'Hannah S.', 'Noah L.', 'Abigail G.', 'Ethan T.'
         ];
 
-        // Preloader
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            const mainContent = document.querySelector('.main-content');
-            const ctaButton = document.querySelector('.cta-button');
-            
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                mainContent.style.opacity = '1';
-                mainContent.style.transform = 'scale(1)';
-                
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                    
-                    // Show and animate the button
-                    ctaButton.style.display = 'flex';
-                    setTimeout(() => {
-                        ctaButton.style.opacity = '1';
-                    }, 100);
-                    
-                    // Animate cards
-                    document.querySelectorAll('.card').forEach((card, index) => {
-                        card.style.animationDelay = `${index * 0.1}s`;
-                    });
-                }, 600);
-            }, 1500);
-        });
+    // Preloader
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    const mainContent = document.querySelector('.main-content');
+    const ctaButton = document.querySelector('.cta-button');
+    
+    // Instantly hide the preloader
+    preloader.style.opacity = '0';
+    preloader.style.display = 'none';
+
+    // Instantly show the main content
+    mainContent.style.opacity = '1';
+    mainContent.style.transform = 'scale(1)';
+    
+    // Instantly show the button
+    ctaButton.style.display = 'flex';
+    ctaButton.style.opacity = '1';
+
+    // Instantly animate cards (no delay)
+    document.querySelectorAll('.card').forEach(card => {
+        card.style.animationDelay = '0s';
+    });
+});
 
         // Timer functionality
         function updateTimer() {

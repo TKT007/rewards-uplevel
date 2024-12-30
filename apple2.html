@@ -439,9 +439,16 @@
             setTimeout(showNameAlert, 2000); // Show first alert after a delay
         }
 
-        // CTA button click handler
-        function handleClick() {
-            const baseUrl = 'https://www.google.com';
+       function handleClick() {
+    // Adiciona o tracking do GA
+    gtag('event', 'affiliate_click', {
+        'event_category': 'Affiliate',
+        'event_label': 'Affiliate Button Click',
+        'source': source || 'direct'
+    });
+
+    // Seu código original
+    const baseUrl = 'https://glstrck.com/aff_c?offer_id=163&aff_id=18892';
     
     // Get URL parameters from current page
     const urlParams = new URLSearchParams(window.location.search);
@@ -469,7 +476,25 @@
         });
     </script>
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HDQSJLG7WY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-HDQSJLG7WY');
+
+  // Função para obter parâmetros da URL
+  function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  }
+
+  // Captura o source quando a página carrega
+  const source = getUrlParameter('source');
+</script>
     
 </body>
 </html>

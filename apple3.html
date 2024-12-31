@@ -433,6 +433,15 @@
         }, 1500);
     });
 
+    gtag('config', 'G-HDQSJLG7WY', {
+    'custom_map': { 'dimension1': 'source' }
+});
+
+gtag('event', 'source_tracking', {
+    'source': source || 'direct'
+});
+
+
     // Timer functionality
     function updateTimer() {
         const timerElement = document.getElementById('timer');

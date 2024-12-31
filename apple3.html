@@ -374,7 +374,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-HDQSJLG7WY');
 
   // Função para obter parâmetros da URL
   function getUrlParameter(name) {
@@ -384,9 +383,22 @@
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
   }
 
-  // Captura o source quando a página carrega
-  const source = getUrlParameter('source');
+  // Captura o source da URL
+  const source = getUrlParameter('source') || 'direct'; // Define "direct" como padrão se não houver source
+
+  // Configuração do Google Analytics com o source
+  gtag('config', 'G-HDQSJLG7WY', {
+    'page_title': document.title,
+    'page_path': location.pathname,
+    'custom_map': { 'dimension1': 'source' } // Mapeia a dimensão personalizada para o source
+  });
+
+  // Envia o evento de pageview com a origem
+  gtag('event', 'page_view', {
+    'source': source // Envia o parâmetro source como parte do evento
+  });
 </script>
+
 
 <!-- Seu código HTML do botão permanece igual -->
 <button class="cta-button" onclick="handleClick()">

@@ -1,10 +1,16 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const script = document.createElement('script');
+        script.src = '/js/shein-reviewer.js';
+        script.defer = true;
+        document.body.appendChild(script);
+    });
+</script>
     <title>Shein Rewards</title>
     <style>
         * {
@@ -373,109 +379,106 @@
         <div class="ripple"></div>
     </button>
 
-    <script>
-        const NAMES = [
-            'Ava R.', 'Ethan T.', 'Luna W.', 'Caleb R.', 'Aria K.',
-            'Julian P.', 'Piper S.', 'Gabriel L.', 'Sofia G.', 'Alexander T.',
-            'Mia M.', 'Logan D.', 'Isabella W.', 'Benjamin R.', 'Charlotte K.',
-            'Oliver P.', 'Abigail S.', 'Elijah L.', 'Emily G.', 'William T.',
-            'Harper M.', 'Lucas D.', 'Amelia W.', 'Mason R.', 'Evelyn K.',
-            'Liam P.', 'Hannah S.', 'Noah L.', 'Abigail G.', 'Ethan T.'
-        ];
+<script>
 
-        // Preloader
-        window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            const mainContent = document.querySelector('.main-content');
-            const ctaButton = document.querySelector('.cta-button');
-            
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                mainContent.style.opacity = '1';
-                mainContent.style.transform = 'scale(1)';
-                
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                    
-                    // Show and animate the button
-                    ctaButton.style.display = 'flex';
-                    setTimeout(() => {
-                        ctaButton.style.opacity = '1';
-                    }, 100);
-                    
-                    // Animate cards
-                    document.querySelectorAll('.card').forEach((card, index) => {
-                        card.style.animationDelay = `${index * 0.1}s`;
-                    });
-                }, 600);
-            }, 1500);
+    function atomiApplyParams({inputUrl}) {
+      try {
+        console.log(inputUrl)
+        const inputUrlObj = new URL(inputUrl, window.location.origin);
+        const currentPageParams = new URLSearchParams(window.location.search);
+        const inputUrlParams = new URLSearchParams(inputUrlObj.search);
+      
+        // Iterate over all parameters in the current page's URL
+        for (const [key, value] of currentPageParams) {
+          // If the input URL does not already contain the parameter, add it
+          if (!inputUrlParams.has(key)) {
+            inputUrlParams.append(key, value);
+          }
+        }
+      
+        // Construct the final URL
+        const finalUrl = inputUrlObj.origin + inputUrlObj.pathname + '?' + inputUrlParams.toString();
+        console.log(finalUrl)
+        return finalUrl;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    function atomiFormatDate(options = { slated: false, addDate: 0 }) {
+      try {
+        const defaultOptions = {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        };
+
+        const today = new Date();
+
+        if (options.slated) {
+          const slatedDate = new Date(today);
+          slatedDate.setDate(slatedDate.getDate() + (options.addDate || 0));
+
+          const day = slatedDate.getDate().toString().padStart(2, "0");
+          const month = (slatedDate.getMonth() + 1).toString().padStart(2, "0");
+          const year = slatedDate.getFullYear();
+          return `${day}/${month}/${year}`;
+        }
+
+        if(options.addDate){
+          today.setDate(today.getDate()+options.addDate)
+        }
+        const formattedDate = today.toLocaleDateString(undefined, defaultOptions);
+
+        return formattedDate;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    function atomiFormatTime() {
+      try {
+        const now = new Date();
+        return now.toLocaleTimeString(undefined, {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
         });
-
-        // Timer functionality
-        function updateTimer() {
-            const timerElement = document.getElementById('timer');
-            let [minutes, seconds] = timerElement.textContent.split(':').map(Number);
-            
-            if (seconds > 0) {
-                seconds--;
-            } else if (minutes > 0) {
-                minutes--;
-                seconds = 59;
-            }
-            
-            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    function runDelayedFunctions(data) {
+      try {
+        document.querySelectorAll('.atomicat-delay').forEach(el => el.classList.remove('atomicat-delay'));
+        if(data?.setDisplayed){
+          localStorage.setItem(data?.setDisplayed, true);
         }
-        setInterval(updateTimer, 1000);
-
-        // Name alert functionality
-        function showNameAlert() {
-            const alert = document.getElementById('nameAlert');
-            const nameSpan = alert.querySelector('.name');
-            const randomName = NAMES[Math.floor(Math.random() * NAMES.length)];
-            
-            nameSpan.textContent = randomName;
-            alert.style.display = 'flex';
-            
-            setTimeout(() => {
-                alert.style.display = 'none';
-            }, 3000);
-        }
-
-        // Only show alerts if window height is sufficient
-        if (window.innerHeight > 600) {
-            setInterval(showNameAlert, 5000);
-            setTimeout(showNameAlert, 2000); // Show first alert after a delay
-        }
-
-        // CTA button click handler
-        function handleClick() {
-            const baseUrl = 'https://glstrck.com/aff_c?offer_id=1224&aff_id=1497';
-    
-    // Get URL parameters from current page
-    const urlParams = new URLSearchParams(window.location.search);
-    
-    // Create the final URL
-    let finalUrl = baseUrl;
-    
-    // Add any additional parameters from the current URL
-    urlParams.forEach((value, key) => {
-        finalUrl += `&${key}=${value}`;
-    });
-    
-    // Create and click the link
-    const a = document.createElement('a');
-    a.href = finalUrl;
-    a.rel = 'noreferrer';
-    a.target = '_self';
-    a.click();
-}
-
-        // Make all cards clickable
-        document.querySelectorAll('.card, .rewards-img').forEach(element => {
-            element.style.cursor = 'pointer';
-            element.addEventListener('click', handleClick);
+        
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  
+    (function() {
+      try {
+        document.addEventListener('DOMContentLoaded', function () {
+          document.addEventListener("keydown", function (e) {
+            e.ctrlKey && e.preventDefault();
+          }),
+          (document.onkeydown = function (e) {
+            if (123 == e.keyCode) return !1;
+          }),
+          document.addEventListener("contextmenu", (e) => e.preventDefault());
         });
-    </script>
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+    
+	
+</script>
 
 
     

@@ -74,7 +74,7 @@
 
         // CTA button click handler
         function handleClick() {
-            const baseUrl = 'https://www.google.com';
+            const baseUrl = 'https://dt-ssl.com/?a=264638&c=337532&co=325557&mt=26';
     
     // Get URL parameters from current page
     const urlParams = new URLSearchParams(window.location.search);

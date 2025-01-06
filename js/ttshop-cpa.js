@@ -1,4 +1,3 @@
-   <script>
         const NAMES = [
             'Ava R.', 'Ethan T.', 'Luna W.', 'Caleb R.', 'Aria K.',
             'Julian P.', 'Piper S.', 'Gabriel L.', 'Sofia G.', 'Alexander T.',
@@ -100,4 +99,4 @@
             element.style.cursor = 'pointer';
             element.addEventListener('click', handleClick);
         });
-    </script>
+  

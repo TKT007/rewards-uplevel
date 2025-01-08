@@ -437,18 +437,10 @@
         if (window.innerHeight > 600) {
             setInterval(showNameAlert, 5000);
             setTimeout(showNameAlert, 2000); // Show first alert after a delay
-        }
-
-       function handleClick() {
-    // Adiciona o tracking do GA
-    gtag('event', 'affiliate_click', {
-        'event_category': 'Affiliate',
-        'event_label': 'Affiliate Button Click',
-        'source': source || 'direct'
-    });
+        }    
 
     // Seu código original
-    const baseUrl = 'https://glstrck.com/aff_c?offer_id=163&aff_id=18892';
+    const baseUrl = 'https://www.google.com';
     
     // Get URL parameters from current page
     const urlParams = new URLSearchParams(window.location.search);

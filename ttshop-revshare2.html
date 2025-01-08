@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +11,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -TT Shop-system, BlinkMacSystemFont, "system-ui", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "system-ui", Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -303,7 +305,6 @@
 </head>
 <body>
    
-
     <div id="nameAlert" class="alert">
        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert h-4 w-4 shrink-0"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#004aad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign w-6 h-6">
@@ -379,7 +380,7 @@
             'Liam P.', 'Hannah S.', 'Noah L.', 'Abigail G.', 'Ethan T.'
         ];
 
- window.addEventListener('DOMContentLoaded', () => {
+     window.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.querySelector('.main-content');
     const ctaButton = document.querySelector('.cta-button');
     
@@ -402,52 +403,39 @@
         setInterval(showNameAlert, 5000);
     }, 1000); // Reduzido para 1 segundo
 });
-        
-        // Timer functionality
-        function updateTimer() {
-            const timerElement = document.getElementById('timer');
-            let [minutes, seconds] = timerElement.textContent.split(':').map(Number);
-            
-            if (seconds > 0) {
-                seconds--;
-            } else if (minutes > 0) {
-                minutes--;
-                seconds = 59;
-            }
-            
-            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }
-        setInterval(updateTimer, 1000);
 
-        // Name alert functionality
-        function showNameAlert() {
-            const alert = document.getElementById('nameAlert');
-            const nameSpan = alert.querySelector('.name');
-            const randomName = NAMES[Math.floor(Math.random() * NAMES.length)];
-            
-            nameSpan.textContent = randomName;
-            alert.style.display = 'flex';
-            
-            setTimeout(() => {
-                alert.style.display = 'none';
-            }, 3000);
-        }
+// Timer functionality
+function updateTimer() {
+    const timerElement = document.getElementById('timer');
+    let [minutes, seconds] = timerElement.textContent.split(':').map(Number);
+    
+    if (seconds > 0) {
+        seconds--;
+    } else if (minutes > 0) {
+        minutes--;
+        seconds = 59;
+    }
+    
+    timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+setInterval(updateTimer, 1000);
 
-        // Only show alerts if window height is sufficient
-        if (window.innerHeight > 600) {
-            setInterval(showNameAlert, 5000);
-            setTimeout(showNameAlert, 2000); // Show first alert after a delay
-        }
+// Name alert functionality
+function showNameAlert() {
+    const alert = document.getElementById('nameAlert');
+    const nameSpan = alert.querySelector('.name');
+    const randomName = NAMES[Math.floor(Math.random() * NAMES.length)];
+    
+    nameSpan.textContent = randomName;
+    alert.style.display = 'flex';
+    
+    setTimeout(() => {
+        alert.style.display = 'none';
+    }, 3000);
+}
 
-       function handleClick() {
-    // Adiciona o tracking do GA
-    gtag('event', 'affiliate_click', {
-        'event_category': 'Affiliate',
-        'event_label': 'Affiliate Button Click',
-        'source': source || 'direct'
-    });
-
-    // Seu código original
+// CTA button click handler
+function handleClick() {
     const baseUrl = 'https://www.google.com';
     
     // Get URL parameters from current page
@@ -469,13 +457,14 @@
     a.click();
 }
 
-        // Make all cards clickable
-        document.querySelectorAll('.card, .rewards-img').forEach(element => {
-            element.style.cursor = 'pointer';
-            element.addEventListener('click', handleClick);
-        });
+// Make all cards clickable
+document.querySelectorAll('.card, .rewards-img').forEach(element => {
+    element.style.cursor = 'pointer';
+    element.addEventListener('click', handleClick);
+});
     </script>
 
 
+    
 </body>
 </html>

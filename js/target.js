@@ -63,7 +63,7 @@ function showNameAlert() {
 
 // CTA button click handler
 function handleClick() {
-    const baseUrl = 'https://www.google.com';
+    const baseUrl = 'https://glstrck.com/aff_c?offer_id=1178&aff_id=1497';
     
     // Get URL parameters from current page
     const urlParams = new URLSearchParams(window.location.search);

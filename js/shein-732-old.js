@@ -65,7 +65,7 @@ function showNameAlert() {
 
 // CTA button click handler
 function handleClick() {
-    const baseUrl = 'https://glstrck.com/aff_c?offer_id=732&aff_id=1497';
+    const baseUrl = 'https://go.kanamrewards.shop/click';
     
     // Get URL parameters from current page
     const urlParams = new URLSearchParams(window.location.search);

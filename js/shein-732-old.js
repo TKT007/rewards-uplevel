@@ -65,7 +65,7 @@ function showNameAlert() {
 
 // CTA button click handler
 function handleClick() {
-    const baseUrl = 'https://go.kanamrewards.shop/click';
+    const baseUrl = 'https://go.saluteinlinea.site/click';
     
     // Get URL parameters from current page
     const urlParams = new URLSearchParams(window.location.search);

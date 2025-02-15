@@ -376,7 +376,7 @@
                                                                 </span>
                                                             </p>
                                                             <p style="text-align: center; margin-top: -15px"><span style="font-size: 18pt; font-family: Poppins, sans-serif;">Click below to claim your reward!</span>
-															<p> <a  href="https://glstrck.com/aff_c?offer_id=163&aff_id=18892"  class="cta_btn q2-btn" > Claim Now!</a> 
+															<p> <a  href="https://glstrck.com/aff_c?offer_id=1145&aff_id=20395"  class="cta_btn q2-btn" > Claim Now!</a> 
                                                             </p>
                                                             </p>
                                                          
@@ -566,28 +566,28 @@
   
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
-    // Encontra o botão pela classe
+
     const ctaButton = document.querySelector('.cta_btn.q2-btn');
     
     if (ctaButton) {
         ctaButton.addEventListener('click', function(e) {
             e.preventDefault();
             
-            // Pega o href original do botão
+           
             const originalUrl = this.href;
             
-            // Obtém os parâmetros da URL atual
+           
             const urlParams = new URLSearchParams(window.location.search);
             
-            // Cria a URL final começando com a URL original
+          
             let finalUrl = originalUrl;
             
-            // Adiciona os parâmetros adicionais da URL atual
+        
             urlParams.forEach((value, key) => {
                 finalUrl += `&${key}=${value}`;
             });
             
-            // Redireciona para a URL final
+          
             window.location.href = finalUrl;
         });
     }

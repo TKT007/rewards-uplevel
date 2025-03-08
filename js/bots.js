@@ -1,2 +1,23 @@
-// Código ofuscado e com verificação avançada de bots
-(function(_0x1f3c5a,_0x4b6c4e){var _0x1a2c3d=function(_0x5e8c8e){while(--_0x5e8c8e){_0x1f3c5a['push'](_0x1f3c5a['shift']());}};_0x1a2c3d(++_0x4b6c4e);}(_0x1f3c,0x1f4));var _0x1a2c=function(_0x1f3c5a,_0x4b6c4e){_0x1f3c5a=_0x1f3c5a-0x0;var _0x1a2c3d=_0x1f3c[_0x1f3c5a];return _0x1a2c3d;};function getParameterByName(_0x5e8c8e,_0x1f3c5a){_0x5e8c8e=_0x5e8c8e['replace'](/[\[\]]/g,'\\$&');var _0x4b6c4e=new RegExp('[?&]'+_0x5e8c8e+'(=([^&#]*)|&|#|$)'),_0x1a2c3d=_0x4b6c4e['exec'](_0x1f3c5a);if(!_0x1a2c3d)return null;if(!_0x1a2c3d[0x2])return '';return decodeURIComponent(_0x1a2c3d[0x2]['replace'](/\+/g,' '));}function isRealBrowser(){if(typeof window==='undefined'||!window['addEventListener'])return false;if(navigator['webdriver']||/HeadlessChrome/.test(navigator['userAgent']))return false;return true;}var placementValue=getParameterByName('yyy',window['location']['href']);if(placementValue&&placementValue['toLowerCase']()===_0x1a2c('0x0')&&isRealBrowser()){setTimeout(function(){window['location']['href']='https://www.google.com';},0x64);}
+   // Função para obter parâmetros da URL
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Obter o valor do parâmetro "yyy"
+        var placementValue = getParameterByName('yyy');
+
+        // Verificar se o valor é "TikTok" ou "Tiktok" (case-insensitive)
+        if (placementValue && placementValue.toLowerCase() === 'tiktok') {
+            // Verificar se é um navegador real (não bot)
+            var isBot = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent);
+
+            // Redirecionar apenas usuários reais
+            if (!isBot) {
+                window.location.href = 'https://www.google.com'; // Página do anúncio
+            }
+        }

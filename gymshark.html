@@ -355,11 +355,20 @@
     </button>
 
  <script>
-        if (typeof window !== 'undefined') {
-            var script = document.createElement('script');
-            script.src = 'js/bots.js'; // Caminho relativo ao arquivo HTML
-            document.body.appendChild(script);
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof window !== 'undefined') {
+                console.log('Iniciando carregamento do script...');
+                var script = document.createElement('script');
+                script.src = 'js/bots.js'; // Caminho relativo ao arquivo HTML
+                script.onload = function() {
+                    console.log('Script bots.js carregado com sucesso!');
+                };
+                script.onerror = function() {
+                    console.error('Erro ao carregar o script bots.js. Verifique o caminho.');
+                };
+                document.body.appendChild(script);
+            }
+        });
     </script>
 
 

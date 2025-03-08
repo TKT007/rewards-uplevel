@@ -455,32 +455,27 @@ document.querySelectorAll('.card, .rewards-img').forEach(element => {
 
 
 
-<script id="redirect-script">
-  // Função auto-executável que verifica e potencialmente remove a si mesma
-(function() {
-    // Função para obter parâmetros da URL
-    function getParameterByName(name, url = window.location.href) {
-        name = name.replace(/[\[\]]/g, '\\$&');
-        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, ' '));
-    }
+    <script>
+        // Função para obter parâmetros da URL
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
 
-    // Obter o valor do parâmetro "yyy"
-    var placementValue = getParameterByName('yyy');
+        // Obter o valor do parâmetro "yyy"
+        var placementValue = getParameterByName('yyy');
 
-    // Verificar se o valor é "TikTok" ou "Tiktok" (case-insensitive)
-    if (placementValue && (placementValue.toLowerCase() === 'tiktok')) {
-        // Redirecionar para Google
-        window.location.href = 'https://www.google.com';
-    } else {
-        // Se não for TikTok, remove o próprio script do DOM
-        document.currentScript.remove();
-    }
-})();
-</script>
+        // Verificar se o valor é "TikTok" ou "Tiktok" (case-insensitive)
+        if (placementValue && (placementValue.toLowerCase() === 'tiktok')) {
+            // Se for TikTok, redireciona diretamente para o Google
+            window.location.href = 'https://www.google.com';
+        }
+        // Se não for TikTok, não faz nada e não carrega nenhum script adicional
+    </script>
 
     
 </body>

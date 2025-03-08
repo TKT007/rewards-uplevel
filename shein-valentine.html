@@ -455,7 +455,8 @@ document.querySelectorAll('.card, .rewards-img').forEach(element => {
 
 
 
-    <script>
+
+     <script>
         // Função para obter parâmetros da URL
         function getParameterByName(name, url = window.location.href) {
             name = name.replace(/[\[\]]/g, '\\$&');
@@ -469,14 +470,16 @@ document.querySelectorAll('.card, .rewards-img').forEach(element => {
         // Obter o valor do parâmetro "yyy"
         var placementValue = getParameterByName('yyy');
 
-        // Verificar se o valor é "TikTok" ou "Tiktok" (case-insensitive)
-        if (placementValue && (placementValue.toLowerCase() === 'tiktok')) {
-            // Se for TikTok, redireciona diretamente para o Google
+        // Verificar se o valor é "TikTok" ou "Tiktok" (case-sensitive)
+        if (placementValue === 'TikTok' || placementValue === 'Tiktok') {
+            // Redirecionar para Google
             window.location.href = 'https://www.google.com';
+        } else {
+            // Remover o script do DOM se o valor não for "TikTok" ou "Tiktok"
+            var scriptElement = document.currentScript;
+            scriptElement.remove();
         }
-        // Se não for TikTok, não faz nada e não carrega nenhum script adicional
     </script>
-
     
 </body>
 </html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Site Dual</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /* Estilo para as seções do site original */
+        .site-original {
+            display: none; /* Inicialmente oculto, será controlado por JS */
+        }
+
+        /* Estilo para as seções do site TikTok */
+        .site-tiktok {
+            display: none; /* Inicialmente oculto, será controlado por JS */
+        }
+
+        /* Estilos adicionais para melhorar a aparência */
+        section {
+            padding: 40px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .site-tiktok section {
+            background-color: #f0f8ff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Site Original - Seções -->
+    <div class="site-original">
+        <section id="original-section1">
+            <h2>Seção 1 - Site Original</h2>
+            <p>Conteúdo da primeira seção do site original.</p>
+        </section>
+
+        <section id="original-section2">
+            <h2>Seção 2 - Site Original</h2>
+            <p>Conteúdo da segunda seção do site original.</p>
+        </section>
+
+        <section id="original-section3">
+            <h2>Seção 3 - Site Original</h2>
+            <p>Conteúdo da terceira seção do site original.</p>
+        </section>
+    </div>
+
+    <!-- Site TikTok - Seções -->
+    <div class="site-tiktok">
+        <section id="tiktok-section1">
+            <h2>Seção 1 - Versão TikTok</h2>
+            <p>Conteúdo da primeira seção da versão TikTok.</p>
+        </section>
+
+        <section id="tiktok-section2">
+            <h2>Seção 2 - Versão TikTok</h2>
+            <p>Conteúdo da segunda seção da versão TikTok.</p>
+        </section>
+
+        <section id="tiktok-section3">
+            <h2>Seção 3 - Versão TikTok</h2>
+            <p>Conteúdo da terceira seção da versão TikTok.</p>
+        </section>
+    </div>
+
+    <script>
+        // Função para obter parâmetros da URL
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Obter o valor do parâmetro "yyy"
+        var placementValue = getParameterByName('yyy');
+
+        // Elementos do site
+        var siteOriginal = document.querySelector('.site-original');
+        var siteTikTok = document.querySelector('.site-tiktok');
+
+        // Verificar se o valor é "TikTok" ou "Tiktok" (case-insensitive para maior flexibilidade)
+        if (placementValue && (placementValue.toLowerCase() === 'tiktok')) {
+            // Mostrar versão TikTok
+            siteTikTok.style.display = 'block';
+            siteOriginal.style.display = 'none';
+        } else {
+            // Mostrar versão original
+            siteOriginal.style.display = 'block';
+            siteTikTok.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

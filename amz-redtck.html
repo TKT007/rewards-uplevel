@@ -356,16 +356,16 @@
 
 
 <script>
- const NAMES = [
-            'Ava R.', 'Ethan T.', 'Luna W.', 'Caleb R.', 'Aria K.',
-            'Julian P.', 'Piper S.', 'Gabriel L.', 'Sofia G.', 'Alexander T.',
-            'Mia M.', 'Logan D.', 'Isabella W.', 'Benjamin R.', 'Charlotte K.',
-            'Oliver P.', 'Abigail S.', 'Elijah L.', 'Emily G.', 'William T.',
-            'Harper M.', 'Lucas D.', 'Amelia W.', 'Mason R.', 'Evelyn K.',
-            'Liam P.', 'Hannah S.', 'Noah L.', 'Abigail G.', 'Ethan T.'
-        ];
+const NAMES = [
+    'Ava R.', 'Ethan T.', 'Luna W.', 'Caleb R.', 'Aria K.',
+    'Julian P.', 'Piper S.', 'Gabriel L.', 'Sofia G.', 'Alexander T.',
+    'Mia M.', 'Logan D.', 'Isabella W.', 'Benjamin R.', 'Charlotte K.',
+    'Oliver P.', 'Abigail S.', 'Elijah L.', 'Emily G.', 'William T.',
+    'Harper M.', 'Lucas D.', 'Amelia W.', 'Mason R.', 'Evelyn K.',
+    'Liam P.', 'Hannah S.', 'Noah L.', 'Abigail G.', 'Ethan T.'
+];
 
-     window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.querySelector('.main-content');
     const ctaButton = document.querySelector('.cta-button');
     
@@ -385,8 +385,8 @@
     // Inicia os alerts mais rapidamente
     setTimeout(() => {
         showNameAlert();
-        setInterval(showNameAlert, 5000);
-    }, 1000); // Reduzido para 1 segundo
+        setInterval(showNameAlert, 5000);  // Intervalo de alertas
+    }, 1000); // Delay de 1 segundo para o primeiro alerta
 });
 
 // Timer functionality
@@ -430,9 +430,14 @@ function handleClick() {
     let finalUrl = baseUrl;
     
     // Add any additional parameters from the current URL
+    const paramArray = [];
     urlParams.forEach((value, key) => {
-        finalUrl += `&${key}=${value}`;
+        paramArray.push(`${key}=${value}`);
     });
+    
+    if (paramArray.length > 0) {
+        finalUrl += `?${paramArray.join('&')}`; // Corrigido para usar ? no primeiro parâmetro
+    }
     
     // Create and click the link
     const a = document.createElement('a');
@@ -447,8 +452,6 @@ document.querySelectorAll('.card, .rewards-img').forEach(element => {
     element.style.cursor = 'pointer';
     element.addEventListener('click', handleClick);
 });
-
-
 </script>
 
 

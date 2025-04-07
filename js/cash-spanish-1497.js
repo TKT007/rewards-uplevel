@@ -1,11 +1,11 @@
- const NAMES = [
-            'Ava R.', 'Ethan T.', 'Luna W.', 'Caleb R.', 'Aria K.',
-            'Julian P.', 'Piper S.', 'Gabriel L.', 'Sofia G.', 'Alexander T.',
-            'Mia M.', 'Logan D.', 'Isabella W.', 'Benjamin R.', 'Charlotte K.',
-            'Oliver P.', 'Abigail S.', 'Elijah L.', 'Emily G.', 'William T.',
-            'Harper M.', 'Lucas D.', 'Amelia W.', 'Mason R.', 'Evelyn K.',
-            'Liam P.', 'Hannah S.', 'Noah L.', 'Abigail G.', 'Ethan T.'
-        ];
+    const NAMES = [
+    'Juan P.', 'María G.', 'José L.', 'Guadalupe R.', 'Miguel Á.',
+    'Juana M.', 'Francisco C.', 'Alejandro T.', 'Patricia N.', 'Carlos V.',
+    'Ana S.', 'Jorge H.', 'Rosa D.', 'Manuel O.', 'Carmen F.',
+    'Pedro Z.', 'Sofía Q.', 'Antonio J.', 'Lucía B.', 'Roberto M.',
+    'Fernanda K.', 'Daniel R.', 'Adriana U.', 'Ricardo E.', 'Gabriela I.',
+    'Raúl Y.', 'Silvia P.', 'Alberto N.', 'Claudia V.', 'Eduardo C.'
+];
 
      window.addEventListener('DOMContentLoaded', () => {
     const mainContent = document.querySelector('.main-content');
@@ -63,7 +63,7 @@ function showNameAlert() {
 
 // CTA button click handler
 function handleClick() {
-    const baseUrl = 'https://glstrck.com/aff_c?offer_id=1084&aff_id=1497';
+    const baseUrl = 'https://glstrck.com/aff_c?offer_id=1269&aff_id=1497';
     
     // Get URL parameters from current page
     const urlParams = new URLSearchParams(window.location.search);

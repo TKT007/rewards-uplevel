@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+   
+    <title>Cash Rewards</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "system-ui", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 14px;
+        }
+
+        body {
+            background: linear-gradient(to bottom, white, #f9fafb);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            zoom: 1.1;
+
+        }
+
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0); /* Totalmente transparente */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            animation: fadeIn 0.6s ease-in-out;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        #preloader img {
+            width: 8rem;
+            height: 8rem;
+            animation: fadeInAndScale 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInAndScale {
+            from { 
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.98); }
+            to { transform: scale(1); }
+        }
+
+        .alert {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            width: calc(100% - 2rem);
+            max-width: 20rem;
+            animation: slideDown 0.5s ease-out;
+            border: 1px solid #e5e7eb;
+            z-index: 50;
+            font-size: 0.875rem;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translate(-50%, -100%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        .alert-icon {
+            color: #00D72E;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .main-content {
+            width: 100%;
+            max-width: 24rem;
+            padding: 0.5rem;
+            margin: 0 auto;
+            margin-top: 10px;
+            padding-bottom: 4rem;
+            opacity: 0;
+            display: block;
+            transform: scale(0.98);
+            zoom: 1.1;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .timer {
+            background: #22c55e;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 1rem 0;
+            transition: transform 0.2s;
+            animation: fadeInUp 0.5s ease-out backwards;
+        }
+
+        .card:hover {
+            transform: scale(1.01);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card h2 {
+            color: #1f2937;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .check-item {
+            background: #f9fafb;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .check-circle {
+            width: 1.5rem;
+            height: 1.5rem;
+            background: #22c55e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .check-text {
+            flex: 1;
+        }
+
+        .check-title {
+            font-weight: 500;
+            color: #1f2937;
+            font-size: 0.875rem;
+        }
+
+        .check-subtitle {
+            color: #22c55e;
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #22c55e;
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 9999px;
+            font-weight: bold;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            width: calc(100% - 2rem);
+            max-width: 24rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: transform 0.2s;
+            z-index: 40;
+            animation: buttonPulse 2s infinite;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        @keyframes buttonPulse {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.02); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+
+        .cta-button:active {
+            transform: translateX(-50%) scale(0.98);
+        }
+
+        .faq-item {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .faq-question {
+            color: #22c55e;
+            font-weight: 600;
+            font-size: 0.813rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .faq-answer {
+            color: #4b5563;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .rewards-img {
+            width: 100%;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .rewards-img:hover {
+            transform: scale(1.02);
+        }
+
+        #nameAlert {
+            display: none;
+        }
+
+        .ripple {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: rippleEffect 2s linear infinite;
+        }
+
+        @keyframes rippleEffect {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .animated {
+            animation-delay: calc(var(--index) * 0.1s);
+        }
+        
+        /* CAPTCHA Styles */
+        .captcha-container {
+            position: fixed;
+            bottom: 5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            width: calc(100% - 2rem);
+            max-width: 24rem;
+            z-index: 45;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+        
+        .captcha-title {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .captcha-subtitle {
+            color: #6b7280;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .captcha-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .captcha-image {
+            width: 100%;
+            height: auto;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid transparent;
+        }
+        
+        .captcha-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .captcha-image.selected {
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+        }
+        
+        .captcha-instruction {
+            font-weight: 500;
+            color: #1f2937;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .captcha-verify {
+            background: #22c55e;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s, transform 0.2s;
+        }
+        
+        .captcha-verify:hover {
+            background: #1ea84c;
+        }
+        
+        .captcha-verify:active {
+            transform: scale(0.98);
+        }
+        
+        .captcha-error {
+            color: #ef4444;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .captcha-success {
+            color: #22c55e;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+  <script src="/js/cash-1232.js" type="application/javascript"></script> 
+    <div id="nameAlert" class="alert">
+       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert h-4 w-4 shrink-0"><circle cx="12" cy="12" r="10"></circle><line x1="12" x2="12" y1="8" y2="12"></line><line x1="12" x2="12.01" y1="16" y2="16"></line></svg>
+ <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dollar-sign w-6 h-6">
+  <line x1="12" x2="12" y1="2" y2="22"></line>
+  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+</svg>
+        
+   <div><strong><span class="name" style="color: #22c55e"></span> just received $750!</strong></div>
+    </div>
+
+    <div class="main-content">
+        <br><br>
+        <img src="/images/cash2-card.png" alt="Rewards $750 Rewards" class="rewards-img">
+        
+        <div class="timer">
+         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-4 h-4 sm:w-5 sm:h-5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <span id="timer">29:59</span>
+        </div>
+
+        <div class="card" style="--index: 1">
+            <h2>Quick Start Guide ➜</h2>
+            <div class="check-item">
+                <div class="check-circle">✓</div>
+                <div class="check-text">
+                    <div class="check-title">Complete 2-3 required deals</div>
+                    <div class="check-subtitle">Earn up to $750</div>
+                </div>
+            </div>
+            <div class="check-item">
+                <div class="check-circle">✓</div>
+                <div class="check-text">
+                    <div class="check-title">Provide a valid email address</div>
+                    <div class="check-subtitle">For instant notification</div>
+                </div>
+            </div>
+            <div class="check-item">
+                <div class="check-circle">✓</div>
+                <div class="check-text">
+                    <div class="check-title">Ensure you are 18 years or older</div>
+                    <div class="check-subtitle">Required</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CAPTCHA Container -->
+        <div class="captcha-container" id="captchaContainer">
+            <div class="captcha-title">Human Verification</div>
+            <div class="captcha-subtitle">Please verify you are not a robot</div>
+            
+            <div class="captcha-instruction">Select all images with <strong id="captchaTarget">traffic lights</strong>:</div>
+            
+            <div class="captcha-grid" id="captchaGrid">
+                <!-- Images will be inserted here by JavaScript -->
+            </div>
+            
+            <button class="captcha-verify" id="verifyCaptcha">Verify</button>
+            <div class="captcha-error" id="captchaError">Incorrect selection. Please try again.</div>
+            <div class="captcha-success" id="captchaSuccess">Verification successful!</div>
+        </div>
+    </div>
+
+    <button class="cta-button" onclick="handleClick()">
+        Start Earning Now ➜
+        <div class="ripple"></div>
+    </button>
+
+<script>
+    // CAPTCHA Implementation
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize CAPTCHA
+        initCaptcha();
+        
+        // Show CAPTCHA after a short delay
+        setTimeout(function() {
+            document.getElementById('captchaContainer').style.opacity = '1';
+        }, 1000);
+    });
+
+    // CAPTCHA variables
+    let captchaImages = [];
+    let selectedImages = [];
+    let correctAnswers = [];
+    let currentChallenge = '';
+    
+    // CAPTCHA challenges
+    const captchaChallenges = [
+        { target: 'traffic lights', correct: [1, 4, 7] },
+        { target: 'cars', correct: [0, 3, 6] },
+        { target: 'storefronts', correct: [2, 5, 8] },
+        { target: 'crosswalks', correct: [1, 5, 7] }
+    ];
+    
+    // Image URLs (replace with your own image paths)
+    const imageBaseUrls = [
+        'https://example.com/images/captcha/car1.jpg',
+        'https://example.com/images/captcha/trafficlight1.jpg',
+        'https://example.com/images/captcha/store1.jpg',
+        'https://example.com/images/captcha/car2.jpg',
+        'https://example.com/images/captcha/trafficlight2.jpg',
+        'https://example.com/images/captcha/crosswalk1.jpg',
+        'https://example.com/images/captcha/car3.jpg',
+        'https://example.com/images/captcha/trafficlight3.jpg',
+        'https://example.com/images/captcha/store2.jpg'
+    ];
+    
+    function initCaptcha() {
+        // Select a random challenge
+        const randomChallenge = captchaChallenges[Math.floor(Math.random() * captchaChallenges.length)];
+        currentChallenge = randomChallenge.target;
+        correctAnswers = randomChallenge.correct;
+        
+        // Set the challenge text
+        document.getElementById('captchaTarget').textContent = currentChallenge;
+        
+        // Generate the CAPTCHA grid
+        const captchaGrid = document.getElementById('captchaGrid');
+        captchaGrid.innerHTML = '';
+        
+        // Create 9 images (3x3 grid)
+        for (let i = 0; i < 9; i++) {
+            const imgContainer = document.createElement('div');
+            const img = document.createElement('img');
+            
+            // Use a different image for each cell (in a real implementation, you'd use actual images)
+            img.src = imageBaseUrls[i] || `https://picsum.photos/200/200?random=${i}`;
+            img.alt = 'CAPTCHA image';
+            img.className = 'captcha-image';
+            img.dataset.index = i;
+            
+            img.addEventListener('click', function() {
+                toggleImageSelection(this);
+            });
+            
+            imgContainer.appendChild(img);
+            captchaGrid.appendChild(imgContainer);
+        }
+    }
+    
+    function toggleImageSelection(imgElement) {
+        const index = parseInt(imgElement.dataset.index);
+        
+        if (selectedImages.includes(index)) {
+            // Deselect
+            selectedImages = selectedImages.filter(i => i !== index);
+            imgElement.classList.remove('selected');
+        } else {
+            // Select
+            selectedImages.push(index);
+            imgElement.classList.add('selected');
+        }
+    }
+    
+    document.getElementById('verifyCaptcha').addEventListener('click', function() {
+        // Sort both arrays for comparison
+        const sortedSelected = [...selectedImages].sort((a, b) => a - b);
+        const sortedCorrect = [...correctAnswers].sort((a, b) => a - b);
+        
+        // Check if selections match exactly
+        const isCorrect = sortedSelected.length === sortedCorrect.length && 
+                          sortedSelected.every((val, idx) => val === sortedCorrect[idx]);
+        
+        if (isCorrect) {
+            // Success
+            document.getElementById('captchaError').style.display = 'none';
+            document.getElementById('captchaSuccess').style.display = 'block';
+            
+            // Hide CAPTCHA after success
+            setTimeout(function() {
+                document.getElementById('captchaContainer').style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById('captchaContainer').style.display = 'none';
+                    
+                    // Show the main CTA button
+                    const ctaButton = document.querySelector('.cta-button');
+                    ctaButton.style.display = 'flex';
+                    setTimeout(function() {
+                        ctaButton.style.opacity = '1';
+                    }, 50);
+                }, 400);
+            }, 1000);
+        } else {
+            // Failure
+            document.getElementById('captchaError').style.display = 'block';
+            document.getElementById('captchaSuccess').style.display = 'none';
+            
+            // Reset selections
+            selectedImages = [];
+            document.querySelectorAll('.captcha-image').forEach(img => {
+                img.classList.remove('selected');
+            });
+            
+            // Generate new CAPTCHA after a short delay
+            setTimeout(initCaptcha, 1000);
+        }
+    });
+
+    function atomiApplyParams({inputUrl}) {
+      try {
+        console.log(inputUrl)
+        const inputUrlObj = new URL(inputUrl, window.location.origin);
+        const currentPageParams = new URLSearchParams(window.location.search);
+        const inputUrlParams = new URLSearchParams(inputUrlObj.search);
+      
+        // Iterate over all parameters in the current page's URL
+        for (const [key, value] of currentPageParams) {
+          // If the input URL does not already contain the parameter, add it
+          if (!inputUrlParams.has(key)) {
+            inputUrlParams.append(key, value);
+          }
+        }
+      
+        // Construct the final URL
+        const finalUrl = inputUrlObj.origin + inputUrlObj.pathname + '?' + inputUrlParams.toString();
+        console.log(finalUrl)
+        return finalUrl;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    function atomiFormatDate(options = { slated: false, addDate: 0 }) {
+      try {
+        const defaultOptions = {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        };
+
+        const today = new Date();
+
+        if (options.slated) {
+          const slatedDate = new Date(today);
+          slatedDate.setDate(slatedDate.getDate() + (options.addDate || 0));
+
+          const day = slatedDate.getDate().toString().padStart(2, "0");
+          const month = (slatedDate.getMonth() + 1).toString().padStart(2, "0");
+          const year = slatedDate.getFullYear();
+          return `${day}/${month}/${year}`;
+        }
+
+        if(options.addDate){
+          today.setDate(today.getDate()+options.addDate)
+        }
+        const formattedDate = today.toLocaleDateString(undefined, defaultOptions);
+
+        return formattedDate;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    function atomiFormatTime() {
+      try {
+        const now = new Date();
+        return now.toLocaleTimeString(undefined, {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    function runDelayedFunctions(data) {
+      try {
+        document.querySelectorAll('.atomicat-delay').forEach(el => el.classList.remove('atomicat-delay'));
+        if(data?.setDisplayed){
+          localStorage.setItem(data?.setDisplayed, true);
+        }
+        
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  
+    (function() {
+      try {
+        document.addEventListener('DOMContentLoaded', function () {
+          document.addEventListener("keydown", function (e) {
+            e.ctrlKey && e.preventDefault();
+          }),
+          (document.onkeydown = function (e) {
+            if (123 == e.keyCode) return !1;
+          }),
+          document.addEventListener("contextmenu", (e) => e.preventDefault());
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+</script>
+</body>
+</html>
